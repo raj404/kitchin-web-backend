@@ -10,6 +10,7 @@ from models import models
 from database import engine
 # from routers import master_data_router, login_router, bbki_router, bbki_download_csv, build_scenario_router
 import logging
+from routers import demo
 
 
 
@@ -18,15 +19,7 @@ middleware = [Middleware(CORSMiddleware, allow_origins=[
                          '*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])]
 
 app = FastAPI(middleware=middleware)
-
-@app.get('/app')
-def list_app():
-    return "Success App from main"
-
-subapp = FastAPI(middleware=middleware)
-
-app.mount("/subapp", subapp)
-
+app.include_router(demo.router)
 # @AuthJWT.load_config
 # def get_config():
 #     return schema_common.Settings()
